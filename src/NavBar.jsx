@@ -8,10 +8,10 @@ class NavBar extends Component {
     render() {
       return (
         <nav className="navbar">
-        <a onhref="/" className="navbar-brand">Chatty</a>
+        <a href="/" className="navbar-brand">Chatty</a>
       </nav>
       
-      );n
+      );
     }
   }
   
