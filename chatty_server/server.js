@@ -25,7 +25,7 @@ const wss = new SocketServer({ server });
 wss.on('connection', (ws) => {
   console.log('Client connected');
   ws.on('message',(data) =>{
-    var data =JSON.parse(data)  
+    var data = JSON.parse(data)  
     if (data.type === "postMessage"){
       data.id= uuid.v4();
       data.type = "incomingMessage "

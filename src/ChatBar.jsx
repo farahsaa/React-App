@@ -10,15 +10,15 @@ class ChatBar extends Component {
         // ask for clarification on binding the function to chatbar comp
     }
   
-    onKeyPress(event) {
+    onKeyPress = (event) => {
      if(event.key === 'Enter'){
-
+        let k = event.target.value
         if (this.props.username != this.state.username) {
             this.props.changeUser(this.state.username, () => {
-                this.props.newMessage(event.target.value)
+                this.props.newMessage(k)
             })
         } else {
-            this.props.newMessage(event.target.value)
+            this.props.newMessage(k)
         }
      }
     }
@@ -30,8 +30,8 @@ class ChatBar extends Component {
     render() {
       return (
         <footer className="chatbar">
-        <input className="chatbar-username" value={this.state.username} onChange={this.changeName} placeholder="Your Name (Optional)" />
-        <input onKeyPress={this.onKeyPress} className="chatbar-message" placeholder="Type a message and hit ENTER" />
+        <input onBlur={this.changeName} value={this.state.username} onChange={this.changeName} placeholder={this.props.currentUser} />
+        <input onKeyUp={this.onKeyPress} className="chatbar-message" placeholder="Type a message and hit ENTER" />
       </footer>
       );
     }
