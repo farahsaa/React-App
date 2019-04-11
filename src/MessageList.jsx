@@ -4,10 +4,10 @@ import Message from './Message.jsx';
 class MessageList extends Component {
     constructor(props) {
       super(props)
-    }
+        }
 
     render() {
-        const messageList = this.prop.messages.map((message) =>{
+        const messageList = this.props.messages.map((message) =>{
             return <Message key = {message.id} message = {message}/>
         })
 
