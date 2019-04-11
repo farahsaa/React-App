@@ -13,7 +13,7 @@ class MessageList extends Component {
 
 
         return (
-        <div className="message">
+        <div>
             {messageList}
         </div>
         )
