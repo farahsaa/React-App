@@ -12,8 +12,6 @@ function Notification(prop) {
 
     )}
 
-
-
 class MessageList extends Component {
     constructor(props) {
       super(props)

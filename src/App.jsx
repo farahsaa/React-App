@@ -23,26 +23,17 @@ class App extends Component {
     this.socket.addEventListener('message', (event) => {
       console.log('message recieved...')
       let message = JSON.parse(event.data)
-
-      this.setState((oldState) => {
-        return {messages: [...oldState.messages, message] }
-      });
+      if(message.type === "counter"){
+        console.log(message.data)
+        this.setState({counter:message.data}) 
+      }
+      else{
+      this.setState({messages: [...this.state.messages, message] });
+      }
     });
 
   }
-  // setTimeout(() => {
-  //   console.log("Simulating incoming message");
-
-  //   // Add a new message to the list of messages in the data store
-  //   const newMessage = {id: 3, username:'Michelle', content: 'Hello there!'};
-  //   const messages = this.state.messages.concat(newMessage)
-  //   // Update the stat e of the app component.
-  //   // Calling setState will trigger a call to render() in App and all child components.
-  //   this.setState({messages: messages, loading:false})
-  // }, 3000);
-  //   } 
-
-
+  
   changeUser = (newName, callback) => {
     this.socket.send(JSON.stringify({
       type: "postNotification",
@@ -56,6 +47,7 @@ class App extends Component {
       id: Date.now(), 
       username: this.state.currentUser.name,
       content: content,
+      type: "postMessage"
     })    
     this.socket.send(JSON.stringify(message));
   }
@@ -66,7 +58,7 @@ class App extends Component {
     } else {
       return (
       <div className = "App">
-        <NavBar/>
+        <NavBar counter={this.state.counter}/>
         <ChatBar username={this.state.currentUser.name} newMessage={this.newMessage} changeUser={this.changeUser}/>
         <MessageList messages = {this.state.messages}/>
       </div>
