@@ -17,13 +17,20 @@ const wss = new SocketServer({ server });
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 
+
+
+//helper function to broadcast the data to all clients
+
 wss.broadcast = (data) => {
   wss.clients.forEach(function (client){
     client.send(JSON.stringify(data))
   })
 }
 
+  //listening for message from client, change message type + id and send back the message
+
 wss.on('connection', (ws) => {
+//counts how many users are connected and broadcast to all clients
 
   wss.broadcast({type:'counter', data:  wss.clients.size})
   
@@ -54,7 +61,7 @@ wss.on('connection', (ws) => {
 
  
   ws.on('close', () => {
-    //send updated number of clients after clients disconnect
+    //sends updated number of clients after clients disconnect
     wss.broadcast({type:'counter', data:  wss.clients.size})
     console.log('Client disconnected');
   });

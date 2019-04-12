@@ -13,12 +13,14 @@ class App extends Component {
     }
   }
 
+  //initiate websocket client connection
   componentDidMount() {
     this.socket = new WebSocket('ws://localhost:3001')
 
     this.socket.onopen = () =>{
       console.log('server connected')
     }
+    //listens for messages from server and set state dependending on the type of message sent back
 
     this.socket.addEventListener('message', (event) => {
       console.log('message recieved...')
@@ -33,7 +35,7 @@ class App extends Component {
     });
 
   }
-  
+  // eventhandler function that will changeuser name to newname
   changeUser = (newName, callback) => {
     this.socket.send(JSON.stringify({
       type: "postNotification",
@@ -41,6 +43,8 @@ class App extends Component {
     }))
     this.setState({currentUser: {name: newName}}, callback)
   }
+
+  //event handler function that will add a message on enter
 
   newMessage = (content) => {
     const message = ({
