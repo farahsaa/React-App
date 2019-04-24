@@ -9,7 +9,7 @@ class App extends Component {
     this.state = {
       currentUser: {name: 'Anonymous'}, 
       messages: [],
-      counter: 0,      
+      counter: [],      
     }
   }
 
@@ -28,20 +28,19 @@ class App extends Component {
       if(message.type === "counter"){
         console.log(message.data)
         this.setState({counter:message.data}) 
-      }
-      else{
-      this.setState({messages: [...this.state.messages, message] });
+      } else {
+        this.setState({messages: [...this.state.messages, message] });
       }
     });
 
   }
   // eventhandler function that will changeuser name to newname
-  changeUser = (newName, callback) => {
+  changeUser = (newName) => {
     this.socket.send(JSON.stringify({
       type: "postNotification",
       content: `${this.state.currentUser.name} has changed name to ${newName}`
     }))
-    this.setState({currentUser: {name: newName}}, callback)
+    this.setState({currentUser: {name: newName}})
   }
 
   //event handler function that will add a message on enter
@@ -61,15 +60,15 @@ class App extends Component {
       return <h1>Loading...</h1>
     } else {
       return (
-      <div className = "App">
-        <NavBar counter={this.state.counter}/>
-        <ChatBar username={this.state.currentUser.name} newMessage={this.newMessage} changeUser={this.changeUser}/>
-        <MessageList messages = {this.state.messages}/>
-      </div>
+        <div className = "App">
+          <NavBar counter={this.state.counter}/>
+          <ChatBar username={this.state.currentUser.name} newMessage={this.newMessage} changeUser={this.changeUser}/>
+          <MessageList messages = {this.state.messages}/>
+        </div>
 
       )
+    }
   }
- }
 }
 
 export default App;
